@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>📚 All Meeting Entries</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>📚 Full Meeting Database</h1>
+    <a href="/" style="display: inline-block; margin-bottom: 20px;">
+      <button>🏠 Back to Home</button>
+    </a>
+
+    {% if entries %}
+      {% for entry in entries %}
+        <div class="meeting">
+          <p><strong>Date:</strong> {{ entry[1] }}</p>
+          <p><strong>Summary:</strong> {{ entry[2] }}</p>
+          <p><strong>Action Items:</strong> {{ entry[3] }}</p>
+          <p><strong>Decisions:</strong> {{ entry[4] }}</p>
+          <p><strong>Dates:</strong> {{ entry[5] }}</p>
+          <p><strong>Transcript:</strong> <pre style="white-space: pre-wrap;">{{ entry[6] }}</pre></p>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p>No entries found.</p>
+    {% endif %}
+  </div>
+</body>
+</html>
