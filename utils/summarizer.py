@@ -32,7 +32,6 @@ Transcript:
     response = model.generate_content(prompt)
     raw = response.text.strip()
 
-    # 💡 Remove Markdown wrapper if present
     if raw.startswith("```json"):
         raw = re.sub(r"^```json\s*", "", raw)
         raw = re.sub(r"\s*```$", "", raw)
