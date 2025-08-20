@@ -82,16 +82,32 @@ Additionally, the system detects any future dates mentioned during the meeting c
 ## Project Structure
 
 ```
-meeting-minutes/
-│── app.py                 # Flask backend
-│── static/                # Frontend JS/CSS
-│── templates/             # HTML templates
-│── transcriber.py         # Handles ASR + diarization
-│── summarizer.py          # Generates meeting summaries
-│── database.py            # SQLite storage (timestamps + calendar links)
-│── calendar_utils.py      # Calendar event link generation
-│── requirements.txt       # Dependencies
-│── README.md              # Documentation
+meeting_minutes/
+│── app.py                   # Flask backend (routes, APIs, frontend integration)
+│── finalize.py               # Finalize and save meeting session (summary + calendar)
+│── live_transcriber.py       # Real-time transcription loop (records + saves to DB)
+│── recorder.py               # Handles chunked audio recording
+│── worker.py                 # Background worker to process audio chunks
+│── meeting_minutes.db        # SQLite database (auto-created)
+│── requirements.txt          # Python dependencies
+│── README.md                 # Project documentation
+│
+├── 📂 static/                # Frontend static assets
+│   ├── script.js             # Client-side JavaScript 
+│   └── style.css             # Frontend styles
+│
+├── 📂 templates/             # Flask Jinja2 templates (HTML pages)
+│   ├── index.html            # Main UI
+│   └── all_entries.html      # Past meeting entries (DB viewer)
+│
+├── 📂 utils/                 # Helper modules
+│   ├── calendar.py           # Google Calendar integration
+│   ├── db.py                 # SQLite DB helper functions
+│   ├── diarizer.py           # Speaker diarization utilities (pyannote)
+│   └── summarizer.py         # Gemini summarization + action item extractor
+
+
+
 ```
 ---
 ## License
