@@ -35,7 +35,7 @@ Additionally, the system detects any future dates mentioned during the meeting c
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/<your-username>/meeting-minutes.git
+   git clone https://github.com/rupesh-mr/meeting_minutes
    cd meeting-minutes
    ```
 
