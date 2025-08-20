@@ -13,7 +13,7 @@ PROCESSED_DIR = "processed"
 os.makedirs(PROCESSED_DIR, exist_ok=True)
 
 def background_worker():
-    print("🧠 Background worker started.")
+    print("Background worker started.")
     processed = set()
     while True:
         new_chunks = [p for p in chunk_paths if p not in processed]
@@ -24,7 +24,7 @@ def background_worker():
             continue
 
         for path in new_chunks:
-            print(f"📝 Processing {path}...")
+            print(f"Processing {path}...")
             audio, sr = sf.read(path)
             mono_audio = audio.mean(axis=1)
             temp_path = path.replace("output", PROCESSED_DIR)
@@ -37,5 +37,5 @@ def background_worker():
 
             transcribed_chunks.append(final_text)
             processed.add(path)
-            print(f"✅ Finished: {path}")
-    print("🧠 Worker done.")
+            print(f"Finished: {path}")
+    print("Worker done.")

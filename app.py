@@ -33,12 +33,12 @@ CHANNELS = 3
 OUTPUT_DIR = "output"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 model = whisper.load_model("small")
-sd.default.device = (3, None)
+sd.default.device = (4, None)
 init_db()
 
 def record_loop():
     try:
-        print("🎙️ Recording started")
+        print("Recording started")
         status_dict["status"] = "recording"
         status_dict["total_chunks"] = 0
         status_dict["processed_chunks"] = 0
@@ -53,12 +53,12 @@ def record_loop():
                 status_dict["total_chunks"] += 1
             else:
                 chunk_queue.put(None)
-            print(f"✅ Recorded chunk {status_dict['total_chunks']}")
+            print(f"Recorded chunk {status_dict['total_chunks']}")
 
     except Exception as e:
-        print(f"❌ Recording error: {e}")
+        print(f"Recording error: {e}")
     finally:
-        print("🛑 Recording stopped")
+        print("Recording stopped")
         status_dict["status"] = "processing"
 
 def process_chunk_worker():
@@ -67,10 +67,10 @@ def process_chunk_worker():
         chunk = chunk_queue.get()
         if chunk is None:
             # Before breaking, make sure queue is empty
-            if chunk_queue.qsize() == 0 :
+            if chunk_queue.qsize() == 0:
                 break
             else:
-                continue  # Still have chunks to process
+                continue
 
         try:
             mono = chunk.mean(axis=1)
@@ -82,12 +82,10 @@ def process_chunk_worker():
             merged = merge_transcript_with_speakers(segments, diarized)
             processed_chunks.append(merged)
             status_dict["processed_chunks"] += 1
-            print(f"✅ Processed chunk {idx}")
+            print(f"Processed chunk {idx}")
             idx += 1
         except Exception as e:
-            print(f"❌ Error processing chunk: {e}")
-    
-    
+            print(f"Error processing chunk: {e}")
 
 @app.route("/")
 def index():
@@ -107,13 +105,13 @@ def start():
 def stop():
     global recording
     if recording:
-        stop_event.set() 
+        stop_event.set()
         status_dict["total_chunks"] += 1
         def wait_then_process():
             while status_dict["processed_chunks"] < status_dict["total_chunks"]:
-                print(f"⏳ Waiting... {status_dict['processed_chunks']}/{status_dict['total_chunks']}")
+                print(f"Waiting... {status_dict['processed_chunks']}/{status_dict['total_chunks']}")
                 time.sleep(1)
-            print("🧠 All chunks processed, generating minutes...")
+            print("All chunks processed, generating minutes...")
             process_all()
         threading.Thread(target=wait_then_process).start()
         recording = False
@@ -124,7 +122,7 @@ def process_all():
     processing = True
 
     full_transcript = "\n".join(processed_chunks)
-    print("✅ Full transcript done")
+    print("Full transcript done")
 
     minutes = generate_minutes(full_transcript)
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -158,9 +156,8 @@ def add_event():
         link = add_to_calendar(summary, date)
         return jsonify({"status": "success", "link": link})
     except Exception as e:
-        print(f"❌ Calendar error: {e}")
+        print(f"Calendar error: {e}")
         return jsonify({"error": str(e)}), 500
-
 
 @app.route("/status")
 def status():

@@ -1,39 +1,47 @@
+/* ===== Base Styles ===== */
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-  background-color: #f9f9f9;
   margin: 0;
   padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  background-color: #f9f9f9;
 }
 
+h1,
+h2 {
+  text-align: center;
+  color: #333;
+}
+
+/* ===== Container ===== */
 .container {
   max-width: 700px;
   margin: 0 auto;
   padding: 20px;
-  background-color: white;
+  background-color: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-h1, h2 {
-  color: #333;
-  text-align: center;
-}
-
+/* ===== Controls ===== */
 .controls {
-  text-align: center;
   margin-bottom: 20px;
+  text-align: center;
 }
 
 button {
   padding: 10px 20px;
-  font-size: 16px;
   margin: 0 10px;
+  font-size: 16px;
   border: none;
   border-radius: 6px;
   cursor: pointer;
+  color: #fff;
   background-color: #007bff;
-  color: white;
   transition: background-color 0.3s;
+}
+
+button:hover:not(:disabled) {
+  background-color: #0056b3;
 }
 
 button:disabled {
@@ -41,10 +49,7 @@ button:disabled {
   cursor: not-allowed;
 }
 
-button:hover:not(:disabled) {
-  background-color: #0056b3;
-}
-
+/* ===== Progress Bar ===== */
 .progress-container {
   margin: 20px 0;
   text-align: center;
@@ -52,31 +57,64 @@ button:hover:not(:disabled) {
 
 .progress-bar-background {
   width: 100%;
+  height: 24px;
   background-color: #eee;
   border-radius: 8px;
   overflow: hidden;
-  height: 24px;
 }
 
 .progress-bar-fill {
-  height: 100%;
   width: 0%;
-  background-color: #28a745;
-  color: white;
-  text-align: center;
+  height: 100%;
   line-height: 24px;
+  text-align: center;
   font-weight: bold;
+  color: #fff;
+  background-color: #28a745;
   transition: width 0.4s ease;
 }
 
+/* ===== Meeting History ===== */
 .history-list {
   margin-top: 20px;
 }
 
 .meeting {
-  background-color: #f1f1f1;
-  border-radius: 8px;
+  margin-bottom: 15px;
   padding: 10px;
-  margin-bottom: 10px;
+  background-color: #f1f1f1;
   border-left: 5px solid #007bff;
+  border-radius: 8px;
+}
+
+/* ===== Calendar Suggestions ===== */
+.calendar-suggestions {
+  margin-top: 12px;
+  padding: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  background-color: #e9f5ff;
+  border: 1px solid #007bff;
+  border-radius: 8px;
+}
+
+.calendar-btn {
+  max-width: 220px;
+  padding: 8px 14px;
+  font-size: 14px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  transition: background-color 0.3s ease;
+}
+
+.calendar-btn:hover {
+  background-color: #0056b3;
 }

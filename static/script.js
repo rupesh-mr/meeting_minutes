@@ -16,32 +16,51 @@ document.addEventListener("DOMContentLoaded", () => {
           historyList.appendChild(div);
 
           if (item.dates && item.dates.length > 0) {
-            showEventSuggestions(item.summary, item.dates);
+            showEventSuggestions(item.summary, item.dates, div);
           }
         });
       })
       .catch(err => {
-        historyList.innerHTML = "⚠️ Failed to load history.";
+        historyList.innerHTML = "Failed to load history.";
       });
   }
 
-  function showEventSuggestions(summary, dates) {
+  function showEventSuggestions(summary, dates, container) {
     const calendarDiv = document.createElement("div");
     calendarDiv.className = "calendar-suggestions";
 
     dates.forEach(date => {
       const btn = document.createElement("button");
       btn.className = "calendar-btn";
-      btn.textContent = `📅 Add \"${summary}\" on ${date}`;
+      btn.textContent = `Add "${summary}" on ${date}`;
+
       btn.onclick = () => {
+        btn.disabled = true;
+
         axios.post("/add_event", { summary, date })
-          .then(() => alert(`✅ Event added for ${date}`))
-          .catch(() => alert("⚠️ Failed to add event."));
+          .then(res => {
+            alert(`Event added for ${date}`);
+
+            const viewBtn = document.createElement("button");
+            viewBtn.className = "calendar-btn";
+            viewBtn.textContent = "View Event";
+            viewBtn.style.marginLeft = "10px";
+            viewBtn.onclick = () => {
+              window.open(res.data.link, "_blank");
+            };
+
+            btn.parentNode.appendChild(viewBtn);
+          })
+          .catch(() => {
+            alert("Failed to add event.");
+            btn.disabled = false;
+          });
       };
+
       calendarDiv.appendChild(btn);
     });
 
-    historyList.prepend(calendarDiv);
+    container.appendChild(calendarDiv);
   }
 
   fetchHistory();
@@ -67,18 +86,17 @@ document.addEventListener("DOMContentLoaded", () => {
     startBtn.disabled = true;
     stopBtn.disabled = false;
     axios.post("/start")
-      .then(() => console.log("🎙 Recording started"))
-      .catch(() => alert("⚠️ Failed to start recording."));
+      .then(() => console.log("Recording started"))
+      .catch(() => alert("Failed to start recording."));
   });
 
   stopBtn.addEventListener("click", () => {
     stopBtn.disabled = true;
-    simulateProgress(30); // show 30s progress bar
+    simulateProgress(30);
 
     axios.post("/stop")
       .then(() => {
-        console.log("⏹ Recording stopped");
-        // Poll /status for completion
+        console.log("Recording stopped");
         const poll = setInterval(() => {
           axios.get("/status").then(res => {
             if (res.data.status === "idle") {
@@ -90,6 +108,6 @@ document.addEventListener("DOMContentLoaded", () => {
           });
         }, 2000);
       })
-      .catch(() => alert("⚠️ Failed to stop recording."));
+      .catch(() => alert("Failed to stop recording."));
   });
 });

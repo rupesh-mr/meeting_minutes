@@ -8,25 +8,27 @@
 </head>
 <body>
   <div class="container">
-    <h1>📋 Meeting Minutes Assistant</h1>
+    <h1>Meeting Minutes Assistant</h1>
 
     <div class="controls">
-      <button id="startBtn">🎙 Start Recording</button>
-      <button id="stopBtn" disabled>⏹ Stop & Save</button>
+      <button id="startBtn">Start Recording</button>
+      <button id="stopBtn" disabled>Stop & Save</button>
     </div>
 
     <div id="progress" class="progress-container" style="display: none;">
-      <p>⏳ Processing remaining audio...</p>
+      <p>Processing remaining audio...</p>
       <div class="progress-bar-background">
         <div id="progress-bar" class="progress-bar-fill">0%</div>
       </div>
     </div>
+
     <div class="extra-controls" style="text-align: center; margin-top: 20px;">
-  <a href="/all">
-    <button style="background-color: #6c757d;">📚 View Full Database</button>
-  </a>
-</div>
-    <h2>🕒 Past Meetings</h2>
+      <a href="/all">
+        <button style="background-color: #6c757d;">View Full Database</button>
+      </a>
+    </div>
+
+    <h2>Past Meetings</h2>
     <div id="history-list" class="history-list">
       Loading...
     </div>

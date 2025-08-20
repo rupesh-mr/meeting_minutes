@@ -1,0 +1,13 @@
+parsedatetime
+google-auth
+google-auth-oauthlib
+google-api-python-client
+pyannote.audio
+python-dotenv
+google-generativeai
+Flask
+sounddevice
+numpy
+openai-whisper
+soundfile
+dateparser

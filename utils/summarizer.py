@@ -40,6 +40,6 @@ Transcript:
     try:
         return json.loads(raw)
     except json.JSONDecodeError as e:
-        print("⚠️ Failed to parse Gemini JSON:", e)
-        print("📤 Raw Gemini output:", repr(raw))
+        print("Failed to parse Gemini JSON:", e)
+        print("Raw Gemini output:", repr(raw))
         return {"summary": "No valid response from Gemini", "action_items": [], "decisions": [], "dates": []}

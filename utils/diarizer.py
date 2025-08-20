@@ -31,10 +31,8 @@ def merge_transcript_with_speakers(whisper_segments, diarization_segments):
         ws_end = ws.get('end')
         text = ws.get('text', '').strip()
 
-        # Default to 'Unknown' if no matching segment
         speaker = "Unknown"
 
-        # Match by overlap — more robust than just `ws_start in [start, end]`
         for d in diarization_segments:
             dia_start = d['start']
             dia_end = d['end']
